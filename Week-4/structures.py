@@ -3,14 +3,15 @@ structures.py
 
 Simple functions performing operations on basic Python data structures.  
 '''
+import re
+import string
 
 # Lists
 
 # write a function that returns a list containig the first and the last element
 # of "the_list". 
 def first_and_last(the_list):
-    return []
-
+    return [the_list[0], the_list[-1]]
 
 # write a function that returns part of "the_list" between indices given by the
 # second and third parameter, respectively. The returned part should be in
@@ -18,14 +19,24 @@ def first_and_last(the_list):
 # If "end" is greater then "beginning" or any og the indices is out of the
 # list, raise a "ValueError" exception. 
 def part_reverse(the_list, beginning, end):
-    return # hint this is incomplete
+    if end > beginning:
+        raise ValueError("End cannot be greater then begining")
+    if end > len(the_list):
+        raise ValueError("End cannot be outside the list")
+    if beginning > len(the_list):
+        raise ValueError("Begining cannot be outside the list")
 
+    return_list = the_list[beginning:end]
+    return_list.reverse()
+    return return_list # hint this is incomplete
 
 # write a function that at the "index" of "the_list" inserts three times the
 # same value. For example if the_list = [0,1,2,3,4] and index = 3 the function
 # will return [0,1,2,3,3,3,4]. 
 def repeat_at_index(the_list, index):
-    return
+    for i in range(1,3): 
+        the_list.insert(the_list[index], index)
+    return the_list
 
 
 # Strings
@@ -33,14 +44,20 @@ def repeat_at_index(the_list, index):
 # write a function that checks whether the word is a palindrome, i.e. it reads
 # the same forward and backwards
 def palindrome_word(word):
-    return
+    if word == word[::-1]:
+        return True
+    return False
 
 # write a function that checks whether the sentence is a palindrome, i.e. it
 # read the same forward and backward. Ignore all spaces and other characters
 # like fullstops, commas, etc. Also do not consider whether the letter is
 # capital or not. 
 def palindrome_sentence(sentence):
-    return
+    sentence = sentence.lower()
+    word_list = re.sub('['+string.punctuation+']', '', sentence).split()
+    if word_list == word_list[::-1]:
+        return True
+    return False
 
 # write a function that concatenates two sentences. First the function checks
 # whether the sentence meets the following criteria: it starts with a capital
@@ -50,7 +67,17 @@ def palindrome_sentence(sentence):
 # or at the end and the must be exactly one space after the end of the first
 # sentence. 
 def concatenate_sentences(sentenece1, sentence2):
-    return
+    sentenece1 = sentenece1.strip()
+    sentence2 = sentence2.strip()
+
+    new_sentence = sentenece1 + ' ' + sentence2
+
+    if new_sentence[0].islower():
+        raise ValueError("Sentence1 does not start with a capital letter")
+    if not (new_sentence[-1] in {'.', '?', '!'}):
+        raise ValueError('Sentence1 does not end with one of the following: . ? !')
+
+    return new_sentence
 
 
 # Dictionaries
@@ -58,14 +85,14 @@ def concatenate_sentences(sentenece1, sentence2):
 # write a function that checks whether there is a record with given key in the
 # dictionary. Return True or False.
 def index_exists(dictionary, key):
-    return
+    return key in dictionary
 
 # write a function which checks whether given value is stored in the
 # dictionary. Return True or False.
 def value_exists(dictionary, value):
-    return
+    return value in dictionary.values()
 
 # write a function that returns a new dictionary which contains all the values
 # from dictionary1 and dictionary2.
 def merge_dictionaries(dictionary1, dictionary2):
-    return
+    return {**dictionary1, **dictionary2}
