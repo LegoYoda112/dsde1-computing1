@@ -19,7 +19,7 @@ def first_and_last(the_list):
 # If "end" is greater then "beginning" or any og the indices is out of the
 # list, raise a "ValueError" exception. 
 def part_reverse(the_list, beginning, end):
-    if end > beginning:
+    if beginning > end:
         raise ValueError("End cannot be greater then begining")
     if end > len(the_list):
         raise ValueError("End cannot be outside the list")
@@ -44,6 +44,7 @@ def repeat_at_index(the_list, index):
 # write a function that checks whether the word is a palindrome, i.e. it reads
 # the same forward and backwards
 def palindrome_word(word):
+    word = word.lower()
     if word == word[::-1]:
         return True
     return False
@@ -54,8 +55,8 @@ def palindrome_word(word):
 # capital or not. 
 def palindrome_sentence(sentence):
     sentence = sentence.lower()
-    word_list = re.sub('['+string.punctuation+']', '', sentence).split()
-    if word_list == word_list[::-1]:
+    sentence = re.sub('['+string.punctuation+' ]', '', sentence)
+    if sentence == sentence[::-1]:
         return True
     return False
 
